@@ -1,8 +1,6 @@
 import {
   LayoutTemplate,
   ImageIcon,
-  PencilIcon,
-  Presentation,
   Settings,
   Shapes,
   Sparkles,
@@ -14,7 +12,7 @@ import { ActiveTool } from "../types";
 
 interface SidebarProps {
   activeTool: ActiveTool;
-  onChangeActiveTool: (tool: string) => void;
+  onChangeActiveTool: (tool: ActiveTool) => void;
 }
 export const Sidebar = ({ activeTool, onChangeActiveTool }: SidebarProps) => {
   return (
