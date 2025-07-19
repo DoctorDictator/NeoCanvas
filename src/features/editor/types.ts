@@ -1,5 +1,14 @@
-import { fabirc } from "fabric";
 import * as material from "material-colors";
+
+export const selectionDependentTools = [
+  "fill",
+  "font",
+  "filter",
+  "opacity",
+  "remove-bg",
+  "stroke-color",
+  "stroke-width",
+];
 
 export const colors = [
   material.red["500"],
@@ -86,6 +95,10 @@ export const DIAMOND_OPTIONS = {
   angle: 0,
 };
 
+export interface EditorHookProps {
+  clearSelectionCallback?: () => void;
+}
+
 export type BuildEditorProps = {
   canvas: fabric.Canvas;
   fillColor: string;
@@ -108,8 +121,8 @@ export interface Editor {
   addInverseTriangle: () => void;
   addDiamond: () => void;
   canvas: fabric.Canvas;
-  fillColor: string;
-  strokeColor: string;
+  getActiveFillColor: () => string;
+  getActiveStrokeColor: () => string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
   // Add other editor methods as needed
