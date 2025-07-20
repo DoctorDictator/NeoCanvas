@@ -52,6 +52,7 @@ export type ActiveTool =
 export const FILL_COLOR = "rgba(0,0,0,1)";
 export const STROKE_COLOR = "rgba(0,0,0,1)";
 export const STROKE_WIDTH = 2;
+export const STROKE_DASH_ARRAY = [];
 
 export const CIRCLE_OPTIONS = {
   radius: 225,
@@ -105,15 +106,22 @@ export type BuildEditorProps = {
   strokeColor: string;
   strokeWidth: number;
   selectedObjects: fabric.Object[];
+  strokeDashArray: number[];
+  setStrokeDashArray: (value: number[]) => void;
   setFillColor: (value: string) => void;
   setStrokeColor: (value: string) => void;
   setStrokeWidth: (value: number) => void;
 };
 
 export interface Editor {
+  getActiveOpacity: () => number;
+  changeOpacity: (value: number) => void;
+  bringForward: () => void;
+  sendBackward: () => void;
   changeFillColor: (value: string) => void;
   changeStrokeColor: (value: string) => void;
   changeStrokeWidth: (value: number) => void;
+  changeStrokeDashArray: (value: number[]) => void;
   addCircle: () => void;
   addSoftRectangle: () => void;
   addRectangle: () => void;
@@ -123,7 +131,8 @@ export interface Editor {
   canvas: fabric.Canvas;
   getActiveFillColor: () => string;
   getActiveStrokeColor: () => string;
-  strokeWidth: number;
+  getActiveStrokeWidth: () => number;
+  getActiveStrokeDashArray: () => number[];
   selectedObjects: fabric.Object[];
   // Add other editor methods as needed
 }
