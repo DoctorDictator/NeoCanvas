@@ -8,17 +8,24 @@ import {
   Editor,
   EditorHookProps,
   FILL_COLOR,
+  FONT_FAMILY,
+  FONT_SIZE,
+  FONT_WEIGHT,
   RECTANGLE_OPTIONS,
   STROKE_COLOR,
   STROKE_DASH_ARRAY,
   STROKE_WIDTH,
+  TEXT_OPTIONS,
   TRIANGLE_OPTIONS,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
+import { ITextboxOptions } from "fabric/fabric-impl";
 
 const buildEditor = ({
   canvas,
+  fontFamily,
+  setFontFamily,
   fillColor,
   setFillColor,
   strokeColor,
@@ -49,6 +56,18 @@ const buildEditor = ({
     canvas.setActiveObject(object);
   };
   return {
+    delete: () => {
+      canvas.getActiveObjects().forEach((object) => canvas.remove(object));
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    },
+    addText: (value: string, options?: ITextboxOptions) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        ...options,
+      });
+      addToCanvas(object);
+    },
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
@@ -59,6 +78,66 @@ const buildEditor = ({
       const value = selectedObject.get("opacity") || 1;
 
       return value;
+    },
+    changeFontStyle: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, fontStyle exists
+          object.set({ fontStyle: value });
+        }
+      });
+
+      canvas.renderAll();
+    },
+    changeFontLineThrough: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, linethrough exists
+          object.set({ linethrough: value });
+        }
+      });
+
+      canvas.renderAll();
+    },
+    changeFontUnderline: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, underline exists
+          object.set({ underline: value });
+        }
+      });
+
+      canvas.renderAll();
+    },
+    changeTextAlign: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, textAlign exists
+          object.set({ textAlign: value });
+        }
+      });
+
+      canvas.renderAll();
+    },
+    changeFontSize: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, fontSize exists
+          object.set({ fontSize: value });
+        }
+      });
+
+      canvas.renderAll();
+    },
+    changeFontWeight: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, fontWeight exists
+          object.set({ fontWeight: value });
+        }
+      });
+
+      canvas.renderAll();
     },
     changeOpacity: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -86,6 +165,17 @@ const buildEditor = ({
       workspace?.sendToBack();
     },
 
+    changeFontFamily: (value: string) => {
+      setFontFamily(value);
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-expect-error Faulty TS Library, fontFamily exists
+
+          object.set({ fontFamily: value });
+        }
+      });
+      canvas.renderAll();
+    },
     changeFillColor: (value: string) => {
       setFillColor(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -222,6 +312,97 @@ const buildEditor = ({
       //Currently, gradients and patterns are not supported
       return value as string;
     },
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return "normal";
+      }
+
+      // @ts-expect-error Faulty TS Library, fontWeight exists
+      const value = selectedObject.get("fontStyle") || "normal";
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveFontWeight: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return FONT_WEIGHT;
+      }
+
+      // @ts-expect-error Faulty TS Library, fontWeight exists
+      const value = selectedObject.get("fontWeight") || FONT_WEIGHT;
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveFontSize: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return FONT_SIZE;
+      }
+
+      // @ts-expect-error Faulty TS Library, fontSize exists
+      const value = selectedObject.get("fontSize") || FONT_SIZE;
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveTextAlign: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return "left";
+      }
+
+      // @ts-expect-error Faulty TS Library, textAlign exists
+      const value = selectedObject.get("textAlign") || "left";
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+
+      // @ts-expect-error Faulty TS Library, underline exists
+      const value = selectedObject.get("underline") || false;
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveFontLineThrough: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+
+      // @ts-expect-error Faulty TS Library, linethrough exists
+      const value = selectedObject.get("linethrough") || false;
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
+    getActiveFontFamily: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return fontFamily;
+      }
+
+      // @ts-expect-error Faulty TS Library, fontFamily exists
+      const value = selectedObject.get("fontFamily") || fontFamily;
+
+      //Currently, gradients and patterns are not supported
+      return value;
+    },
     getActiveStrokeColor: () => {
       const selectedObject = selectedObjects[0];
 
@@ -262,7 +443,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
-
+  const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
@@ -293,6 +474,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
         strokeDashArray,
         setStrokeDashArray,
         selectedObjects,
+        fontFamily,
+        setFontFamily,
       });
     }
 
@@ -304,6 +487,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     strokeWidth,
     selectedObjects,
     strokeDashArray,
+    fontFamily,
   ]);
   const init = useCallback(
     ({
