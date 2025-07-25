@@ -1,12 +1,12 @@
 "use client";
 import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useEditor } from "../hooks/use-editor";
+import { useEditor } from "../../hooks/use-editor";
 import { Navbar } from "./navbar";
 import { Sidebar } from "./sidebar";
 import { Toolbar } from "./toolbar";
 import { Footer } from "./footer";
-import { ActiveTool, selectionDependentTools } from "../types";
+import { ActiveTool, selectionDependentTools } from "../../types";
 import { ShapeSidebar } from "./shape-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
 import { StrokeColorSidebar } from "./stroke-color-sidebar";
@@ -14,6 +14,8 @@ import { StrokeWidthSidebar } from "./stroke-width-sidebar";
 import { OpacitySidebar } from "./opacity-sidebar";
 import { TextSidebar } from "./text-sidebar";
 import { FontSidebar } from "./font-sidebar";
+import { ImageSidebar } from "./image-sidebar";
+import { FilterSidebar } from "./filter-sidebar";
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>();
   const onChangeActiveTool = useCallback(
@@ -91,6 +93,16 @@ export const Editor = () => {
         <FontSidebar
           editor={editor}
           activeTool={activeTool!}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <ImageSidebar
+          editor={editor}
+          activeTool={activeTool!}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <FilterSidebar
+          editor={editor}
+          activeTool={activeTool ?? "select"}
           onChangeActiveTool={onChangeActiveTool}
         />
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">

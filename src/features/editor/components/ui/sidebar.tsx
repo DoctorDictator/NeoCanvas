@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 
-import { ActiveTool } from "../types";
+import { ActiveTool } from "../../types";
 
 interface SidebarProps {
   activeTool: ActiveTool;

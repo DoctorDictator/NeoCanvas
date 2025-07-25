@@ -19,7 +19,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Hint } from "@/components/hint";
 import { BsCloudCheck } from "react-icons/bs";
-import { ActiveTool } from "../types";
+import { ActiveTool } from "../../types";
 
 import { cn } from "@/lib/utils";
 

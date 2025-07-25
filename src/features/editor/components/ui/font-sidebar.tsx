@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ActiveTool, Editor, fonts } from "../types";
+import { ActiveTool, Editor, fonts } from "../../types";
 import { ToolSidebarHeader } from "./tool-sidebar-header";
 import { ToolSidebarClose } from "./tool-sidebar-close";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,7 +28,7 @@ export const FontSidebar = ({
         activeTool === "font" ? "visible" : "hidden"
       )}
     >
-      <ToolSidebarHeader title="Font" description="Chnage the text font" />
+      <ToolSidebarHeader title="Font" description="Change the text font" />
       <ScrollArea className="flex-1 h-0 max-h-[calc(100vh-120px)]">
         <div className="p-4 space-y-1 border-b">
           {fonts.map((font) => {
